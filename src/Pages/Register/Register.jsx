@@ -21,7 +21,7 @@ const Register = () => {
             if (formData?.password) {
                 createUser(formData.email, formData.password)
                     .then(result => {
-                        profileUpdate(formData?.name, formData?.password)
+                        profileUpdate(formData?.name, formData?.photo)
                             .then(result => { }).catch(err => setError(err.message))
                         alert("usercreate successfull")
                     })
@@ -59,11 +59,11 @@ const Register = () => {
 
     return (
         <div className="w-11/12 mx-auto my-10 ">
-            <div className="flex justify-around items-center gap-10">
+            <div className="flex justify-around items-center gap-10" data-aos="fade-right">
                 <div className="text-center lg:text-left ">
                     <img src={loginImg} alt="" />
                 </div>
-                <div className="card shadow-2xl  w-2/5">
+                <div className="card shadow-2xl  w-2/5" data-aos="fade-left">
                     <form className="card-body " onSubmit={submitHandle}>
                         {error && <p className='text-center text-red-600 '>{error}</p>}
                         <div className="form-control">
@@ -71,25 +71,25 @@ const Register = () => {
                             <label className="label">
                                 <span className="label-text">Full Name</span>
                             </label>
-                            <input type="text" onChange={formHandle} defaultValue={formData?.name} name="name" placeholder="full name" className="input input-bordered" />
+                            <input type="text" onBlur={formHandle} defaultValue={formData?.name} name="name" placeholder="full name" className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Photo URL</span>
                             </label>
-                            <input type="text" onChange={formHandle} defaultValue={formData?.photo} name="photo" placeholder="photo url" className="input input-bordered" />
+                            <input type="text" onBlur={formHandle} defaultValue={formData?.photo} name="photo" placeholder="photo url" className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
-                            <input type="email" onChange={formHandle} defaultValue={formData?.email} name="email" placeholder="your email" className="input input-bordered" />
+                            <input type="email" onBlur={formHandle} defaultValue={formData?.email} name="email" placeholder="your email" className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type={showPass ? "text" : "password"} onChange={formHandle} defaultValue={formData?.password} name="password" placeholder="your password" className="input input-bordered" />
+                            <input type={showPass ? "text" : "password"} onBlur={formHandle} defaultValue={formData?.password} name="password" placeholder="your password" className="input input-bordered" />
                         </div>
 
                         <div className='flex items-center gap-3'>

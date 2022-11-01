@@ -49,7 +49,7 @@ const productsData = [
 const Products = () => {
 
     return (
-        <div className='py-10'>
+        <div className='py-10' >
             <div className='text-center w-full md:w-1/2 mx-auto'>
                 <h2 className='text-orange-600 font-bold text-xl mb-3' >Popular Products</h2>
                 <h1 className='text-5xl font-bold mb-3'>Browse Our Products</h1>

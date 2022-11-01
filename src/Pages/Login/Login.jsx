@@ -24,7 +24,6 @@ const Login = () => {
     const submitHandle = (e) => {
         if (formData?.email) {
             if (formData?.password) {
-
                 loginUserManualy(formData.email, formData.password)
                     .then(result => console.log(result))
                     .catch(err => setError(err.message))
@@ -63,24 +62,24 @@ const Login = () => {
     return (
         <div className="w-11/12 mx-auto h-[85vh] my-20">
             <div className="flex justify-around items-center gap-10">
-                <div className="text-center lg:text-left ">
+                <div className="text-center lg:text-left" data-aos="fade-right">
                     <img src={loginImg} alt="" />
                 </div>
-                <div className="card shadow-2xl  w-2/5">
-                    {error && <p className='text-center text-red-600'>{error}</p>}
+                <div className="card shadow-2xl  w-2/5" data-aos="fade-left">
                     <form onSubmit={submitHandle} className="card-body ">
+                        {error && <p className='text-center text-red-600'>{error}</p>}
                         <h1 className='text-center text-3xl font-bold'>Login</h1>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
-                            <input onChange={formHandle} name="email" type="email" defaultValue={formData?.email} placeholder="your email" className="input input-bordered" />
+                            <input onBlur={formHandle} name="email" type="email" defaultValue={formData?.email} placeholder="your email" className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input onChange={formHandle} name="password" type={showPass ? "text" : "password"} defaultValue={formData?.password} placeholder="your password" className="input input-bordered" />
+                            <input onBlur={formHandle} name="password" type={showPass ? "text" : "password"} defaultValue={formData?.password} placeholder="your password" className="input input-bordered" />
                         </div>
                         <div className='flex items-center gap-3'>
                             <input onClick={() => setshowPass(!showPass)} type="checkbox" name="check" id="" className='w-5 h-5' />

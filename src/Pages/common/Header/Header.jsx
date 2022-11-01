@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from "../../../assets/logo.svg";
 import { AuthContex } from '../../../Contex/AuthProvider/AuthProvider';
+import notFound from "../../../assets/icons/notFoundImage.png";
 
 const Header = () => {
     const { loginUser, logout } = useContext(AuthContex)
-
     const menuItems = <>
         <li><NavLink className={({ isActive }) => isActive ? "text-black font-bold" : undefined} to="/home">Home</NavLink></li>
         <li><NavLink className={({ isActive }) => isActive ? "text-black font-bold" : undefined} to="/about">About</NavLink></li>
@@ -35,12 +35,26 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    {
-                        loginUser?.uid ? <NavLink to="/login" onClick={logout} className="mr-3 btn btn-outline btn-warning">Logout</NavLink>
-                            : <NavLink to="/login" className={({ isActive }) => isActive ? "mr-3 btn font-bold btn-info" : "mr-3 btn btn-outline btn-info"}>Login</NavLink>
-                    }
+                    <button className="btn btn-outline btn-error mr-3">appointment</button>
 
-                    <button className="btn btn-outline btn-error">appointment</button>
+                    {
+                        loginUser?.uid ?
+                            <div className="dropdown dropdown-bottom dropdown-end ">
+                                <label tabIndex={0} className=" flex items-center gap-3">
+                                    <img className='w-10 rounded-full' src={loginUser?.photoURL ? loginUser?.photoURL : notFound} alt="User" />
+                                </label>
+                                <ul tabIndex={0} className="dropdown-content  p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+                                    <li className='font-semibold uppercase'>{loginUser?.displayName}</li>
+                                    <li>{loginUser?.email}</li>
+                                    <li className=' py-2 hover:bg-gray-300 pl-2 rounded-md'><Link>Edit Profile</Link></li>
+                                    <li className='py-2 hover:bg-gray-300 pl-2 rounded-md'><Link>My Appointment</Link></li>
+                                    <li className=' py-2 hover:bg-gray-300 pl-2 rounded-md'><Link to="/admin">Admin Pannel</Link></li>
+                                    <NavLink to="/" onClick={logout} className="mt-3 btn btn-outline w-full text-black">Logout </NavLink>
+                                </ul>
+
+                            </div>
+                            : <NavLink to="/login" className={({ isActive }) => isActive ? "btn font-bold btn-info" : " btn btn-outline btn-info"}>Login</NavLink>
+                    }
                 </div>
             </div>
         </div>

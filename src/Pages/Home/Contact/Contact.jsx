@@ -23,7 +23,7 @@ const contactData = [
 ]
 const Contact = () => {
     return (
-        <div className='py-5 md:py-10'>
+        <div className='py-5 md:py-10' data-aos="flip-up">
             <div className='bg-black flex flex-col md:flex-row justify-around  rounded-xl p-5 md:p-0'>
                 {
                     contactData.map(contact =>
