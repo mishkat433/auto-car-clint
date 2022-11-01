@@ -6,18 +6,23 @@ const AddProduct = () => {
 
     const submitHandle = (e) => {
         if (product?.name && product?.price && product?.photo) {
-
-            fetch("url", {
+            fetch("http://localhost:5000/admin/addProduct", {
                 method: "POST",
                 headers: {
-                    'content-type': 'application/json'
+                    "content-type": "application/json"
                 },
                 body: JSON.stringify(product)
             })
                 .then(res => res.json())
                 .then(data => {
-                    toast("Product added Successfully")
-                    setProduct({})
+                    if (data.acknowledged) {
+                        toast("Product added Successfully")
+                        setProduct({})
+                        e.target.reset()
+                    }
+                    else {
+                        alert("user is not created")
+                    }
                 })
         }
         e.preventDefault()
@@ -53,7 +58,7 @@ const AddProduct = () => {
                         <button type='submit' className="btn btn-primary">Add Product</button>
                     </div>
                     <div className="form-control mt-6">
-                        <input className="btn btn-primary" onClick={() => setProduct({})} type="reset" value="Clear" />
+                        <input className="btn btn-error" onClick={() => setProduct({})} type="reset" value="Clear" />
                     </div>
                 </form>
             </div>

@@ -3,6 +3,7 @@ import AdminLayout from "../../Layout/AdminLayout";
 import Main from "../../Layout/Main";
 import AddProduct from "../../Pages/AdminPannel/AddProduct/AddProduct";
 import AdminPannel from "../../Pages/AdminPannel/AdminPannel/AdminPannel";
+import AllProduct from "../../Pages/AdminPannel/AllProduct/AllProduct";
 import ManageAdmin from "../../Pages/AdminPannel/ManageAdmin/ManageAdmin";
 import ManageAppointment from "../../Pages/AdminPannel/ManageAppointment/ManageAppointment";
 import Home from "../../Pages/Home/Home/Home";
@@ -45,6 +46,10 @@ const routes = createBrowserRouter([
             {
                 path: "/admin/addProduct",
                 element: <AddProduct />
+            },
+            {
+                path: "/admin/allProduct",
+                element: <AllProduct />
             },
             {
                 path: "/admin/makeAdmin",

@@ -1,15 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FcFullTrash } from 'react-icons/fc';
 import { toast } from 'react-toastify';
 
 const ManageAdmin = () => {
-    const [admin, setAdmin] = useState("")
+    const [allAdmin, setAddAdmin] = useState([]);
+    const [admin, setAdmin] = useState(null);
+
+    useEffect(() => {
+        fetch("http://localhost:5000/admin")
+            .then(res => res.json())
+            .then(data => setAddAdmin(data))
+    }, [allAdmin])
+
+    const adminDeleteHandle = (id) => {
+        const confirm = window.confirm("Do you want to delete this admin")
+        if (confirm) {
+            fetch(`http://localhost:5000/admin/delete/${id}`, {
+                method: "DELETE"
+            })
+                .then(res => res.json())
+                .then(result => {
+                    if (result.deletedCount > 0) {
+                        toast("Admin delete successfully")
+                    }
+                })
+        }
+
+    }
 
     const submitHandle = (e) => {
-
-        if (admin.name && admin.price && admin.photo) {
-
-            fetch("url", {
+        console.log(admin);
+        if (admin.email) {
+            fetch("http://localhost:5000/admin/addAdmin", {
                 method: "POST",
                 headers: {
                     'content-type': 'application/json'
@@ -18,12 +40,20 @@ const ManageAdmin = () => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    toast("Admin added Successfully")
-                    setAdmin({})
+                    if (data.acknowledged) {
+                        toast("Admin added Successfully")
+                        setAdmin({})
+                        e.target.reset()
+                    }
                 })
         }
         e.preventDefault()
     }
+
+    const adminHandle = (e) => {
+        setAdmin({ ...admin, [e.target.name]: e.target.value })
+    }
+
     return (
         <div>
             <h4 className='text-center font-semibold text-4xl my-3'>Manage Admin</h4>
@@ -33,9 +63,8 @@ const ManageAdmin = () => {
                         <label className="label" htmlFor='Email'>
                             <span className="label-text">Email : </span>
                         </label>
-                        <input type="email" placeholder="admin email: " name='email' className="input input-bordered" />
+                        <input type="email" placeholder="admin email:" onBlur={adminHandle} name='email' className="input input-bordered" />
                     </div>
-
                     <div className="form-control mt-6">
                         <button type='submit' className="btn btn-primary">Add As Admin</button>
                     </div>
@@ -48,25 +77,20 @@ const ManageAdmin = () => {
                     <thead>
                         <tr>
                             <th>SL No </th>
-                            <th>Image</th>
                             <th>Email</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-
-                        <tr>
-                            <th>
-
-                            </th>
-                            <td>
-                                imgage
-                            </td>
-                            <td>
-                                mishkat 433@gmail.com
-                            </td>
-                            <td><span className='flex justify-center items-center cursor-pointer gap-4'>Delete<FcFullTrash className='text-2xl' /> </span> </td>
-                        </tr>
+                        {
+                            allAdmin.map((ad, index) =>
+                                <tr key={index}>
+                                    <th>{index + 1}</th>
+                                    <td> {ad.email}</td>
+                                    <td><span className='flex justify-center items-center cursor-pointer gap-4' onClick={() => adminDeleteHandle(ad._id)}>Delete<FcFullTrash className='text-2xl' /> </span> </td>
+                                </tr>
+                            )
+                        }
                     </tbody>
                 </table>
             </div>
