@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { FcFullTrash } from 'react-icons/fc';
 import { FaPencilAlt } from 'react-icons/fa';
+import { FcFullTrash } from 'react-icons/fc';
 import { toast } from 'react-toastify';
 
-const AllProduct = () => {
+const AllServices = () => {
     const [products, setProducts] = useState([]);
     const [change, setChange] = useState(null);
     const [close, setClose] = useState(false)
@@ -11,18 +11,18 @@ const AllProduct = () => {
 
     useEffect(() => {
         setLoading(true)
-        fetch("https://auto-car-server.vercel.app/products")
+        fetch("https://auto-car-server.vercel.app/services")
             .then(res => res.json())
             .then(data => {
-                setLoading(false)
                 setProducts(data)
+                setLoading(false)
             })
-    }, [])
+    }, [products])
 
     const deleteProductHandle = (id) => {
         const confirm = window.confirm("Do you Want ot delete this product?")
         if (confirm) {
-            fetch(`https://auto-car-server.vercel.app/delete/${id}`, {
+            fetch(`https://auto-car-server.vercel.app/services/delete/${id}`, {
                 method: "DELETE"
             })
                 .then(res => res.json())
@@ -36,7 +36,7 @@ const AllProduct = () => {
 
     const submitHandle = (e) => {
 
-        fetch(`https://auto-car-server.vercel.app/productUpdate/${change._id}`, {
+        fetch(`https://auto-car-server.vercel.app/servideUpdate/${change._id}`, {
             method: "PUT",
             headers: {
                 'content-type': 'application/json'
@@ -57,10 +57,10 @@ const AllProduct = () => {
     const editHandle = (e) => {
         setChange({ ...change, [e.target.name]: e.target.value })
     }
-
     return (
         <div>
             <h4 className='text-center font-semibold text-2xl my-3'>All Products</h4>
+            <p className='text-center my-3 text-red-500'>Developed not complite</p>
             <div className=" w-full px-5">
                 <table className="table table-zebra w-full text-center ">
                     <thead>
@@ -79,9 +79,9 @@ const AllProduct = () => {
                                 <tr key={index} >
                                     <td className='w-1/12 mx-auto'>{index + 1}</td>
                                     <td className='w-2/12 mx-auto'>
-                                        <img className='w-14 mx-auto ' src={product?.photo} alt="product" />
+                                        <img className='w-14 mx-auto ' src={product?.img} alt="product" />
                                     </td>
-                                    <td className='w-5/12 mx-auto'>{product?.name}</td>
+                                    <td className='w-5/12 mx-auto'>{product?.title}</td>
                                     <td className='w-2/12 mx-auto'> ${product?.price}</td>
                                     <td className='w-2/12 mx-auto'><span className='flex justify-center items-center  gap-6'>
                                         <label htmlFor="my-modal-3" className="" onClick={() => setChange(product)}><FaPencilAlt onClick={() => setClose(true)} className=' text-xl cursor-pointer text-info' /></label>
@@ -108,7 +108,7 @@ const AllProduct = () => {
                                             <label className="label" htmlFor='name'>
                                                 <span className="label-text">Product Name : </span>
                                             </label>
-                                            <input type="text" onBlur={editHandle} defaultValue={change?.name} placeholder="product name : " name='name' className="input input-bordered" />
+                                            <input type="text" onBlur={editHandle} defaultValue={change?.title} placeholder="product name : " name='name' className="input input-bordered" />
                                         </div>
                                         <div className="form-control">
                                             <label className="label" htmlFor='price'>
@@ -120,7 +120,7 @@ const AllProduct = () => {
                                             <label className="label" htmlFor='photo'>
                                                 <span className="label-text">Product Phot URL : </span>
                                             </label>
-                                            <input type="text" onBlur={editHandle} defaultValue={change?.photo} placeholder="product photo url" name='photo' className="input input-bordered" />
+                                            <input type="text" onBlur={editHandle} defaultValue={change?.img} placeholder="product photo url" name='photo' className="input input-bordered" />
                                         </div>
                                         <div className="form-control mt-6">
                                             <button type='submit' className="btn btn-primary">Update Product</button>
@@ -137,4 +137,4 @@ const AllProduct = () => {
     );
 };
 
-export default AllProduct;
+export default AllServices;

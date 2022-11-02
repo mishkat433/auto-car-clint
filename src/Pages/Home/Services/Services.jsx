@@ -23,7 +23,7 @@ const Services = () => {
                 {services.length === 0 && <button className="btn loading w-32">loading...</button>}
                 {
                     services.map(service => <ServicesCard service={service} key={service._id} />)
-                }s
+                }
             </div>
             <div className='flex justify-center mt-14'>
                 <button className='btn bg-orange-600 border-none '>Show more</button>

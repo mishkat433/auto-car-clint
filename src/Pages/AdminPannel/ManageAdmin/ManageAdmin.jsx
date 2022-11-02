@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FcFullTrash } from 'react-icons/fc';
 import { toast } from 'react-toastify';
+import { AuthContex } from '../../../Contex/AuthProvider/AuthProvider';
 
 const ManageAdmin = () => {
+    const { loginUser } = useContext(AuthContex);
     const [allAdmin, setAddAdmin] = useState([]);
     const [admin, setAdmin] = useState(null);
     const [depend, setDepend] = useState(true)
@@ -69,7 +71,7 @@ const ManageAdmin = () => {
                         <input type="email" placeholder="admin email:" onBlur={adminHandle} name='email' className="input input-bordered" required />
                     </div>
                     <div className="form-control mt-6">
-                        <button type='submit' className="btn btn-primary">Add As Admin</button>
+                        <button type='submit' className="btn btn-primary" disabled={loginUser?.email === "testing@gmail.com" ? true : false}>Add As Admin</button>
                     </div>
                 </form>
             </div>
@@ -85,9 +87,10 @@ const ManageAdmin = () => {
                         </tr>
                     </thead>
                     <tbody>
+
                         {
                             allAdmin.map((ad, index) =>
-                                <tr key={index}>
+                                <tr key={index} className={loginUser.email === "testing@gmail.com" ? "hidden" : undefined}>
                                     <th>{index + 1}</th>
                                     <td> {ad.email}</td>
                                     <td><span className='flex justify-center items-center cursor-pointer gap-4' onClick={() => adminDeleteHandle(ad._id)}>Delete<FcFullTrash className='text-2xl' /> </span> </td>
@@ -96,6 +99,9 @@ const ManageAdmin = () => {
                         }
                     </tbody>
                 </table>
+                {
+                    loginUser.email === "testing@gmail.com" && <p className='text-center text-red-500 mt-5'>All features are not allow for the Tester</p>
+                }
             </div>
         </div>
     );

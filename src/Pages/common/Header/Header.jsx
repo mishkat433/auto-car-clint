@@ -9,13 +9,13 @@ const Header = () => {
     const menuItems = <>
         <li><NavLink className={({ isActive }) => isActive ? "text-black font-bold" : undefined} to="/home">Home</NavLink></li>
         <li><NavLink className={({ isActive }) => isActive ? "text-black font-bold" : undefined} to="/about">About</NavLink></li>
-        <li><NavLink className={({ isActive }) => isActive ? "text-black font-bold" : undefined} to="/">Services</NavLink></li>
+        <li><NavLink className={({ isActive }) => isActive ? "text-black font-bold" : undefined} to="/services">Services</NavLink></li>
         <li><NavLink className={({ isActive }) => isActive ? "text-black font-bold" : undefined} to="/">Blog</NavLink></li>
         <li><NavLink className={({ isActive }) => isActive ? "text-black font-bold" : undefined} to="/">Contact</NavLink></li>
     </>
     return (
-        <div>
-            <div className="navbar w-11/12 mx-auto">
+        <div className='shadow-lg'>
+            <div className="navbar w-11/12 mx-auto ">
                 <div className="navbar-start ">
                     <div className="dropdown">
                         <label tabIndex={0} className="btn btn-ghost lg:hidden">
