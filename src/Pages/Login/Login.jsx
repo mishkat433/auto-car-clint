@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { FaFacebookF, FaGoogle, FaLinkedinIn } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import loginImg from "../../assets/images/login/login.svg"
 import { AuthContex } from '../../Contex/AuthProvider/AuthProvider';
 
@@ -10,14 +10,25 @@ const Login = () => {
     const [showPass, setshowPass] = useState(false);
     const [error, setError] = useState("")
 
+    const location = useLocation();
+    const navigate = useNavigate()
+
+    const from = location.state?.from?.pathname || "/";
+
     const googleSiginHandle = () => {
         googleSiginIn()
-            .then(result => { setError("") })
+            .then(result => {
+                navigate(from, { replace: true })
+                setError("")
+            })
             .catch(err => setError(err.message))
     }
     const facebookSigninHandle = () => {
         facebookSignIn()
-            .then(result => { setError("") })
+            .then(result => {
+                navigate(from, { replace: true })
+                setError("")
+            })
             .catch(err => setError(err.message))
     }
 
@@ -25,7 +36,9 @@ const Login = () => {
         if (formData?.email) {
             if (formData?.password) {
                 loginUserManualy(formData.email, formData.password)
-                    .then(result => console.log(result))
+                    .then(result => {
+                        navigate(from, { replace: true })
+                    })
                     .catch(err => setError(err.message))
                 setError("")
             }

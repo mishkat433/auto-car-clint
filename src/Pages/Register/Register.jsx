@@ -1,18 +1,32 @@
 import React, { useContext, useState } from 'react';
 import { FaFacebookF, FaGoogle, FaLinkedinIn } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import loginImg from "../../assets/images/login/login.svg"
 import { AuthContex } from '../../Contex/AuthProvider/AuthProvider';
 
 const Register = () => {
-    const { googleSiginIn, createUser, profileUpdate } = useContext(AuthContex)
+    const { googleSiginIn, facebookSignIn, createUser, profileUpdate } = useContext(AuthContex)
     const [formData, setFormData] = useState({});
     const [showPass, setshowPass] = useState(false);
     const [error, setError] = useState("")
 
+    const location = useLocation();
+    const navigate = useNavigate()
+
+    const from = location.state?.from?.pathname || "/";
+
     const googleSiginHandle = () => {
         googleSiginIn()
-            .then(result => { })
+            .then(result => { navigate(from, { replace: true }) })
+            .catch(err => setError(err.message))
+    }
+
+    const facebookSigninHandle = () => {
+        facebookSignIn()
+            .then(result => {
+                navigate(from, { replace: true })
+                setError("")
+            })
             .catch(err => setError(err.message))
     }
 
@@ -22,7 +36,7 @@ const Register = () => {
                 createUser(formData.email, formData.password)
                     .then(result => {
                         profileUpdate(formData?.name, formData?.photo)
-                            .then(result => { }).catch(err => setError(err.message))
+                            .then(result => { navigate(from, { replace: true }) }).catch(err => setError(err.message))
                         alert("usercreate successfull")
                     })
                     .catch(err => setError(err.message))
@@ -103,7 +117,7 @@ const Register = () => {
                     </form>
                     <div className='flex justify-evenly mb-3'>
                         <button onClick={googleSiginHandle} className='bg-gray-300 p-3 rounded-full text-orange-600 text-xl'><FaGoogle /></button>
-                        <button className='bg-gray-300 p-3 rounded-full text-blue-600 text-xl'><FaFacebookF /></button>
+                        <button onClick={facebookSigninHandle} className='bg-gray-300 p-3 rounded-full text-blue-600 text-xl'><FaFacebookF /></button>
                         <button className='bg-gray-300 p-3 rounded-full text-blue-800 text-xl'><FaLinkedinIn /></button>
 
                     </div>

@@ -6,7 +6,7 @@ const AddProduct = () => {
 
     const submitHandle = (e) => {
         if (product?.name && product?.price && product?.photo) {
-            fetch("http://localhost:5000/admin/addProduct", {
+            fetch("https://auto-car-server.vercel.app/admin/addProduct", {
                 method: "POST",
                 headers: {
                     "content-type": "application/json"

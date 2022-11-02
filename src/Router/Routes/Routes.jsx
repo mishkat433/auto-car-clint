@@ -10,6 +10,7 @@ import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 import NotFound from "../../Pages/NotFound/NotFound";
 import Register from "../../Pages/Register/Register";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 const routes = createBrowserRouter([
     {
@@ -38,26 +39,27 @@ const routes = createBrowserRouter([
     {
         path: "/admin",
         element: <AdminLayout />,
+        errorElement: <NotFound />,
         children: [
             {
                 path: "/admin",
-                element: <AdminPannel />
+                element: <PrivateRoute><AdminPannel /></PrivateRoute>
             },
             {
                 path: "/admin/addProduct",
-                element: <AddProduct />
+                element: <PrivateRoute><AddProduct /></PrivateRoute>
             },
             {
                 path: "/admin/allProduct",
-                element: <AllProduct />
+                element: <PrivateRoute><AllProduct /></PrivateRoute>
             },
             {
                 path: "/admin/makeAdmin",
-                element: <ManageAdmin />
+                element: <PrivateRoute> <ManageAdmin /></PrivateRoute>
             },
             {
                 path: "/admin/appointment",
-                element: <ManageAppointment />
+                element: <PrivateRoute><ManageAppointment /></PrivateRoute>
             }
         ]
     }

@@ -49,7 +49,7 @@ const Header = () => {
                                     <li className=' py-2 hover:bg-gray-300 pl-2 rounded-md'><Link>Edit Profile</Link></li>
                                     <li className='py-2 hover:bg-gray-300 pl-2 rounded-md'><Link>My Appointment</Link></li>
                                     <li className=' py-2 hover:bg-gray-300 pl-2 rounded-md'><Link to="/admin">Admin Pannel</Link></li>
-                                    <NavLink to="/" onClick={logout} className="mt-3 btn btn-outline w-full text-black">Logout </NavLink>
+                                    <button onClick={logout} className="mt-3 btn btn-outline w-full text-black">Logout </button>
                                 </ul>
 
                             </div>

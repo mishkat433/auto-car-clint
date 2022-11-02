@@ -5,33 +5,35 @@ import { toast } from 'react-toastify';
 const ManageAdmin = () => {
     const [allAdmin, setAddAdmin] = useState([]);
     const [admin, setAdmin] = useState(null);
+    const [depend, setDepend] = useState(true)
+
 
     useEffect(() => {
-        fetch("http://localhost:5000/admin")
+        fetch("https://auto-car-server.vercel.app/admin")
             .then(res => res.json())
             .then(data => setAddAdmin(data))
-    }, [allAdmin])
+    }, [depend])
 
     const adminDeleteHandle = (id) => {
         const confirm = window.confirm("Do you want to delete this admin")
         if (confirm) {
-            fetch(`http://localhost:5000/admin/delete/${id}`, {
+            fetch(`https://auto-car-server.vercel.app/admin/delete/${id}`, {
                 method: "DELETE"
             })
                 .then(res => res.json())
                 .then(result => {
                     if (result.deletedCount > 0) {
                         toast("Admin delete successfully")
+                        setDepend(!depend)
                     }
                 })
         }
-
     }
 
     const submitHandle = (e) => {
         console.log(admin);
         if (admin.email) {
-            fetch("http://localhost:5000/admin/addAdmin", {
+            fetch("https://auto-car-server.vercel.app/admin/addAdmin", {
                 method: "POST",
                 headers: {
                     'content-type': 'application/json'
@@ -44,6 +46,7 @@ const ManageAdmin = () => {
                         toast("Admin added Successfully")
                         setAdmin({})
                         e.target.reset()
+                        setDepend(!depend)
                     }
                 })
         }
@@ -63,7 +66,7 @@ const ManageAdmin = () => {
                         <label className="label" htmlFor='Email'>
                             <span className="label-text">Email : </span>
                         </label>
-                        <input type="email" placeholder="admin email:" onBlur={adminHandle} name='email' className="input input-bordered" />
+                        <input type="email" placeholder="admin email:" onBlur={adminHandle} name='email' className="input input-bordered" required />
                     </div>
                     <div className="form-control mt-6">
                         <button type='submit' className="btn btn-primary">Add As Admin</button>

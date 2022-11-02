@@ -5,6 +5,7 @@ import Contact from '../Contact/Contact';
 import Features from '../Features/Features';
 import Feedbacks from '../Feedback/Feedbacks';
 import Products from '../Products/Products';
+import Services from '../Services/Services';
 import Teems from '../Teem/Teems';
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
         <div className='w-11/12 mx-auto'>
             <Banner />
             <About />
+            <Services />
             <Contact />
             <Products />
             <Teems />

@@ -9,7 +9,7 @@ const AllProduct = () => {
     const [close, setClose] = useState(false)
 
     useEffect(() => {
-        fetch("http://localhost:5000/products")
+        fetch("https://auto-car-server.vercel.app/products")
             .then(res => res.json())
             .then(data => setProducts(data))
     }, [products])
@@ -17,7 +17,7 @@ const AllProduct = () => {
     const deleteProductHandle = (id) => {
         const confirm = window.confirm("Do you Want ot delete this product?")
         if (confirm) {
-            fetch(`http://localhost:5000/delete/${id}`, {
+            fetch(`https://auto-car-server.vercel.app/delete/${id}`, {
                 method: "DELETE"
             })
                 .then(res => res.json())
@@ -31,7 +31,7 @@ const AllProduct = () => {
 
     const submitHandle = (e) => {
 
-        fetch(`http://localhost:5000/productUpdate/${change._id}`, {
+        fetch(`https://auto-car-server.vercel.app/productUpdate/${change._id}`, {
             method: "PUT",
             headers: {
                 'content-type': 'application/json'
