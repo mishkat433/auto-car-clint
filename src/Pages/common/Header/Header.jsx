@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import logo from "../../../assets/logo.svg";
 import { AuthContex } from '../../../Contex/AuthProvider/AuthProvider';
 import notFound from "../../../assets/icons/notFoundImage.png";
+import { FaAngleDown } from 'react-icons/fa';
 
 const Header = () => {
     const { loginUser, logout } = useContext(AuthContex)
@@ -35,23 +36,26 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <button className="btn btn-outline btn-error mr-3">appointment</button>
-
+                    <Link to="/myAppointment" className="btn btn-outline btn-error mr-3">My appointment</Link>
                     {
                         loginUser?.uid ?
-                            <div className="dropdown dropdown-bottom dropdown-end ">
-                                <label tabIndex={0} className=" flex items-center gap-3">
-                                    <img className='w-10 rounded-full' src={loginUser?.photoURL ? loginUser?.photoURL : notFound} alt="User" />
-                                </label>
-                                <ul tabIndex={0} className="dropdown-content  p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-                                    <li className='font-semibold uppercase'>{loginUser?.displayName}</li>
-                                    <li>{loginUser?.email}</li>
-                                    <li className=' py-2 hover:bg-gray-300 pl-2 rounded-md'><Link>Edit Profile</Link></li>
-                                    <li className='py-2 hover:bg-gray-300 pl-2 rounded-md'><Link>My Appointment</Link></li>
-                                    <li className=' py-2 hover:bg-gray-300 pl-2 rounded-md'><Link to="/admin">Admin Pannel</Link></li>
-                                    <button onClick={logout} className="mt-3 btn btn-outline w-full text-black">Logout </button>
-                                </ul>
+                            <div className='flex items-center'>
 
+                                <div className="dropdown dropdown-bottom dropdown-end ">
+                                    <label tabIndex={0} className=" flex items-center gap-3">
+                                        <img className='w-10 rounded-full' src={loginUser?.photoURL ? loginUser?.photoURL : notFound} alt="User" />
+                                        <FaAngleDown />
+                                    </label>
+                                    <ul tabIndex={0} className="dropdown-content  p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+                                        <li className='font-semibold uppercase'>{loginUser?.displayName}</li>
+                                        <li>{loginUser?.email}</li>
+                                        <li className=' py-2 hover:bg-gray-300 pl-2 rounded-md'><Link>Edit Profile</Link></li>
+                                        <li className='py-2 hover:bg-gray-300 pl-2 rounded-md'><Link to="/admin/appointment" >Manage Appointment</Link></li>
+                                        <li className=' py-2 hover:bg-gray-300 pl-2 rounded-md'><Link to="/admin">Admin Pannel</Link></li>
+                                        <button onClick={logout} className="mt-3 btn btn-outline w-full text-black">Logout </button>
+                                    </ul>
+
+                                </div>
                             </div>
                             : <NavLink to="/login" className={({ isActive }) => isActive ? "btn font-bold btn-info" : " btn btn-outline btn-info"}>Login</NavLink>
                     }

@@ -1,13 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import { FcFullTrash } from 'react-icons/fc';
 import { toast } from 'react-toastify';
+import { AuthContex } from '../../../Contex/AuthProvider/AuthProvider';
 
 const AllServices = () => {
+    const { loginUser } = useContext(AuthContex)
     const [products, setProducts] = useState([]);
     const [change, setChange] = useState(null);
     const [close, setClose] = useState(false)
     const [loading, setLoading] = useState(false)
+
+    const [findAdmin, setFindAdmin] = useState("");
+
+    useEffect(() => {
+        setLoading(true)
+        fetch(`https://auto-car-server.vercel.app/admin?email=${loginUser?.email}`)
+            .then(res => res.json())
+            .then(data => {
+                setFindAdmin(data[0].email)
+                setLoading(false)
+            })
+    }, [loginUser?.email])
 
     useEffect(() => {
         setLoading(true)
@@ -61,6 +75,7 @@ const AllServices = () => {
         <div>
             <h4 className='text-center font-semibold text-2xl my-3'>All Products</h4>
             <p className='text-center my-3 text-red-500'>Developed not complite</p>
+            {!products && <button className="btn loading">loading...</button>}
             <div className=" w-full px-5">
                 <table className="table table-zebra w-full text-center ">
                     <thead>
@@ -73,7 +88,7 @@ const AllServices = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {!products && <button className="btn loading">loading...</button>}
+
                         {
                             products.map((product, index) =>
                                 <tr key={index} >
@@ -83,9 +98,11 @@ const AllServices = () => {
                                     </td>
                                     <td className='w-5/12 mx-auto'>{product?.title}</td>
                                     <td className='w-2/12 mx-auto'> ${product?.price}</td>
-                                    <td className='w-2/12 mx-auto'><span className='flex justify-center items-center  gap-6'>
-                                        <label htmlFor="my-modal-3" className="" onClick={() => setChange(product)}><FaPencilAlt onClick={() => setClose(true)} className=' text-xl cursor-pointer text-info' /></label>
-                                        <FcFullTrash className='text-2xl cursor-pointer' onClick={() => deleteProductHandle(product._id)} /> </span> </td>
+                                    <td className='w-2/12 mx-auto'>
+                                        {findAdmin === 'testing@gmail.com' ? <p className='text-red-500'>not allow</p> : <span className='flex justify-center items-center  gap-6'>
+                                            <label htmlFor="my-modal-3" className="" onClick={() => setChange(product)}><FaPencilAlt onClick={() => setClose(true)} className=' text-xl cursor-pointer text-info' /></label>
+                                            <FcFullTrash className='text-2xl cursor-pointer' onClick={() => deleteProductHandle(product._id)} /> </span>}
+                                    </td>
                                 </tr>
                             )
                         }
@@ -102,6 +119,7 @@ const AllServices = () => {
                             <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                             <div>
                                 <h4 className='text-center font-semibold text-4xl my-3'>Update Product</h4>
+                                <p className='text-red-500 text-center'>All features are not allow for the Tester</p>
                                 <div className="w-full mx-auto">
                                     <form onSubmit={submitHandle} className="card-body">
                                         <div className="form-control">
@@ -123,7 +141,7 @@ const AllServices = () => {
                                             <input type="text" onBlur={editHandle} defaultValue={change?.img} placeholder="product photo url" name='photo' className="input input-bordered" />
                                         </div>
                                         <div className="form-control mt-6">
-                                            <button type='submit' className="btn btn-primary">Update Product</button>
+                                            <button type='submit' className="btn btn-primary" disabled={findAdmin === 'testing@gmail.com' ? true : false}>Update Product</button>
                                         </div>
                                     </form>
                                 </div>
@@ -133,6 +151,7 @@ const AllServices = () => {
                 </div>
             }
             {/* Modal end */}
+
         </div>
     );
 };

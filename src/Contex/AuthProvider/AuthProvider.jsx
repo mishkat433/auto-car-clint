@@ -35,6 +35,7 @@ const AuthProvider = ({ children }) => {
 
 
     const logout = () => {
+        localStorage.removeItem('car-token');
         signOut(auth).then(result => { }).catch(err => console.log(err.message))
     }
 
@@ -45,6 +46,7 @@ const AuthProvider = ({ children }) => {
         })
         return () => unsubscribe();
     }, [])
+
 
     const authInfo = {
         loginUser, setLoginUser, loading, setLoading,

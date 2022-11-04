@@ -10,7 +10,7 @@ const AdminPannel = () => {
 
     useEffect(() => {
         setLoading(true)
-        fetch(`http://localhost:5000/admin?email=${loginUser?.email}`)
+        fetch(`https://auto-car-server.vercel.app/admin?email=${loginUser?.email}`)
             .then(res => res.json())
             .then(data => {
                 setFindAdmin(data[0].email)
@@ -20,7 +20,7 @@ const AdminPannel = () => {
 
     return (
         <div className='h-[80vh]'>
-            {loading && <div className='flex justify-center mt-32'><button className="btn loading">loading</button></div>}
+            {loading && <div className='flex justify-center mt-32'><button className="btn loading">loading...</button></div>}
             {
                 findAdmin ? <div className='flex flex-col justify-center items-center '>
                     <h1 className='text-4xl font-semibold text-center my-3'>Welcome to Admin Pnnel</h1>

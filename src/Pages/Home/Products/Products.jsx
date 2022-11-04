@@ -3,6 +3,7 @@ import Product from './Product';
 
 const Products = () => {
     const [products, setProducts] = useState([])
+
     useEffect(() => {
         fetch("https://auto-car-server.vercel.app/products")
             .then(res => res.json())

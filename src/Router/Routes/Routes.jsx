@@ -8,8 +8,10 @@ import AllProduct from "../../Pages/AdminPannel/AllProduct/AllProduct";
 import AllServices from "../../Pages/AdminPannel/AllServices/AllServices";
 import ManageAdmin from "../../Pages/AdminPannel/ManageAdmin/ManageAdmin";
 import ManageAppointment from "../../Pages/AdminPannel/ManageAppointment/ManageAppointment";
+import Checkout from "../../Pages/Checkout/Checkout";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
+import MyAppointment from "../../Pages/MyAppointment/MyAppointment";
 import NotFound from "../../Pages/NotFound/NotFound";
 import OurServices from "../../Pages/OurServices/OurServices";
 import Register from "../../Pages/Register/Register";
@@ -38,7 +40,16 @@ const routes = createBrowserRouter([
             {
                 path: '/servicesDetails/:id',
                 element: <SerVicesDetails />,
-                loader: () => fetch('https://auto-car-server.vercel.app/services')
+                loader: ({ params }) => fetch(`https://auto-car-server.vercel.app/singleServices/${params.id}`),
+            },
+            {
+                path: '/checkout/:id',
+                element: <PrivateRoute><Checkout /></PrivateRoute>,
+                loader: ({ params }) => fetch(`https://auto-car-server.vercel.app/singleServices/${params.id}`),
+            },
+            {
+                path: '/myAppointment',
+                element: <PrivateRoute><MyAppointment /></PrivateRoute>,
             },
             {
                 path: "/login",
