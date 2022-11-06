@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import heaerBg from "../../assets/images/banner/6.jpg"
 import { AuthContex } from '../../Contex/AuthProvider/AuthProvider';
@@ -8,27 +8,37 @@ const Checkout = () => {
     const selectService = useLoaderData()
     const service = selectService[0]
     const { loginUser } = useContext(AuthContex)
+    const [error, setError] = useState("")
     const [formData, setFormData] = useState({
         email: loginUser?.email,
         serviceId: service?._id
     })
 
+    const navigate = useNavigate()
+
     const checkoutHandle = (e) => {
-
-        fetch("https://auto-car-server.vercel.app/postAppointment", {
-            method: "POST",
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        }).then(res => res.json())
-            .then(data => {
-                if (data.insertedId) {
-                    toast("appointment confirm successful")
-                }
-            })
-
         e.preventDefault()
+        if (formData?.contact.length === 11 && formData.contact.startsWith("01")) {
+            setError("")
+            fetch("https://auto-car-server.vercel.app/postAppointment", {
+                method: "POST",
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            }).then(res => res.json())
+                .then(data => {
+                    if (data.insertedId) {
+                        e.target.reset()
+                        toast("appointment confirm successful")
+                        navigate('/services')
+                    }
+                })
+        }
+        else {
+            setError("Contact Number is not valid")
+        }
+
     }
 
     const formHandle = (e) => {
@@ -47,6 +57,7 @@ const Checkout = () => {
                 <h1>{service?.title}</h1>
                 <div className="hero bg-base-200">
                     <div className="card  w-full  shadow-2xl bg-base-100">
+                        {error && <p className='text-center text-error my-2'>{error}</p>}
                         <form className="card-body" onSubmit={checkoutHandle}>
                             <div className='flex gap-5'>
                                 <div className="form-control w-1/2">

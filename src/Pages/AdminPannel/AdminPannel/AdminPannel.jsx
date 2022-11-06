@@ -23,7 +23,7 @@ const AdminPannel = () => {
             {loading && <div className='flex justify-center mt-32'><button className="btn loading">loading...</button></div>}
             {
                 findAdmin ? <div className='flex flex-col justify-center items-center '>
-                    <h1 className='text-4xl font-semibold text-center my-3'>Welcome to Admin Pnnel</h1>
+                    <h1 className='text-4xl font-semibold text-center my-3'>Welcome to Admin Panel</h1>
                     <img className='w-96 h-96 mt-10' src={adminPannel} alt="" />
                 </div>
                     :

@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react';
-import { FaFacebookF, FaGoogle, FaLinkedinIn } from 'react-icons/fa';
+
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import loginImg from "../../assets/images/login/login.svg"
 import { AuthContex } from '../../Contex/AuthProvider/AuthProvider';
+import SocilaLogin from '../common/SocialLogin/SocilaLogin';
 
 const Login = () => {
-    const { googleSiginIn, facebookSignIn, loginUserManualy } = useContext(AuthContex)
+    const { loginUserManualy } = useContext(AuthContex)
     const [formData, setFormData] = useState({});
     const [showPass, setshowPass] = useState(false);
     const [error, setError] = useState("")
@@ -15,22 +16,6 @@ const Login = () => {
 
     const from = location.state?.from?.pathname || "/";
 
-    const googleSiginHandle = () => {
-        googleSiginIn()
-            .then(result => {
-                navigate(from, { replace: true })
-                setError("")
-            })
-            .catch(err => setError(err.message))
-    }
-    const facebookSigninHandle = () => {
-        facebookSignIn()
-            .then(result => {
-                navigate(from, { replace: true })
-                setError("")
-            })
-            .catch(err => setError(err.message))
-    }
 
     const submitHandle = (e) => {
         if (formData?.email) {
@@ -87,12 +72,12 @@ const Login = () => {
 
 
     return (
-        <div className="w-11/12 mx-auto h-[85vh] my-20">
+        <div className="w-11/12 mx-auto h-full lg:h-[85vh] my-5 md:my-10">
             <div className="flex justify-around items-center gap-10">
-                <div className="text-center lg:text-left" data-aos="fade-right">
+                <div className="text-center lg:text-left hidden lg:block" data-aos="fade-right">
                     <img src={loginImg} alt="" />
                 </div>
-                <div className="card shadow-2xl  w-2/5" data-aos="fade-left">
+                <div className="card shadow-2xl w-full lg:w-2/5" data-aos="fade-left">
                     <form onSubmit={submitHandle} className="card-body ">
                         {error && <p className='text-center text-red-600'>{error}</p>}
                         <h1 className='text-center text-3xl font-bold'>Login</h1>
@@ -100,13 +85,13 @@ const Login = () => {
                             <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
-                            <input onBlur={formHandle} name="email" type="email" defaultValue={formData?.email} placeholder="your email" className="input input-bordered" />
+                            <input onChange={formHandle} name="email" type="email" defaultValue={formData?.email} placeholder="your email" className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input onBlur={formHandle} name="password" type={showPass ? "text" : "password"} defaultValue={formData?.password} placeholder="your password" className="input input-bordered" />
+                            <input onChange={formHandle} name="password" type={showPass ? "text" : "password"} defaultValue={formData?.password} placeholder="your password" className="input input-bordered" />
                         </div>
                         <div className='flex items-center gap-3'>
                             <input onClick={() => setshowPass(!showPass)} type="checkbox" name="check" id="" className='w-5 h-5' />
@@ -122,12 +107,7 @@ const Login = () => {
                         </div>
                         <h5 className='text-center'>or Sign in with</h5>
                     </form>
-                    <div className='flex justify-evenly mb-3'>
-                        <button onClick={googleSiginHandle} className='bg-gray-300 p-3 rounded-full text-orange-600 text-xl' ><FaGoogle /></button>
-                        <button onClick={facebookSigninHandle} className='bg-gray-300 p-3 rounded-full text-blue-600 text-xl'><FaFacebookF /></button>
-                        <button className='bg-gray-300 p-3 rounded-full text-blue-800 text-xl'><FaLinkedinIn /></button>
-
-                    </div>
+                    <SocilaLogin />
                     <p to="/" className='text-center text-lg mb-10'>Don't have an account?
                         <Link to="/register" className='font-bold text-orange-600'>Register</Link></p>
                 </div>

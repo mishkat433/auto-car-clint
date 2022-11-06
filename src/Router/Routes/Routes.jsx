@@ -7,8 +7,10 @@ import AdminPannel from "../../Pages/AdminPannel/AdminPannel/AdminPannel";
 import AllProduct from "../../Pages/AdminPannel/AllProduct/AllProduct";
 import AllServices from "../../Pages/AdminPannel/AllServices/AllServices";
 import ManageAdmin from "../../Pages/AdminPannel/ManageAdmin/ManageAdmin";
-import ManageAppointment from "../../Pages/AdminPannel/ManageAppointment/ManageAppointment";
+import ManageAppointment from "../../Pages/ManageAppointment/ManageAppointment";
+import Blog from "../../Pages/Blog/Blog";
 import Checkout from "../../Pages/Checkout/Checkout";
+import Contact from "../../Pages/Contact/Contact";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 import MyAppointment from "../../Pages/MyAppointment/MyAppointment";
@@ -17,6 +19,7 @@ import OurServices from "../../Pages/OurServices/OurServices";
 import Register from "../../Pages/Register/Register";
 import SerVicesDetails from "../../Pages/ServicesDetalis/SerVicesDetails";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import Profile from "../../Pages/Profile/Profile";
 
 const routes = createBrowserRouter([
     {
@@ -31,6 +34,18 @@ const routes = createBrowserRouter([
             {
                 path: '/home',
                 element: <Home />
+            },
+            {
+                path: '/blog',
+                element: <Blog />
+            },
+            {
+                path: '/contact',
+                element: <Contact />
+            },
+            {
+                path: '/profile',
+                element: <PrivateRoute><Profile /></PrivateRoute>
             },
             {
                 path: '/services',
@@ -52,6 +67,10 @@ const routes = createBrowserRouter([
                 element: <PrivateRoute><MyAppointment /></PrivateRoute>,
             },
             {
+                path: "/appointment",
+                element: <PrivateRoute><ManageAppointment /></PrivateRoute>
+            },
+            {
                 path: "/login",
                 element: <Login />
             },
@@ -63,7 +82,7 @@ const routes = createBrowserRouter([
     },
     {
         path: "/admin",
-        element: <AdminLayout />,
+        element: <PrivateRoute> <AdminLayout /></PrivateRoute>,
         errorElement: <NotFound />,
         children: [
             {
@@ -90,10 +109,8 @@ const routes = createBrowserRouter([
                 path: "/admin/makeAdmin",
                 element: <PrivateRoute> <ManageAdmin /></PrivateRoute>
             },
-            {
-                path: "/admin/appointment",
-                element: <PrivateRoute><ManageAppointment /></PrivateRoute>
-            }
+
+
         ]
     }
 ])

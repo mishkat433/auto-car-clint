@@ -11,8 +11,9 @@ const Header = () => {
         <li><NavLink className={({ isActive }) => isActive ? "text-black font-bold" : undefined} to="/home">Home</NavLink></li>
         <li><NavLink className={({ isActive }) => isActive ? "text-black font-bold" : undefined} to="/about">About</NavLink></li>
         <li><NavLink className={({ isActive }) => isActive ? "text-black font-bold" : undefined} to="/services">Services</NavLink></li>
-        <li><NavLink className={({ isActive }) => isActive ? "text-black font-bold" : undefined} to="/">Blog</NavLink></li>
-        <li><NavLink className={({ isActive }) => isActive ? "text-black font-bold" : undefined} to="/">Contact</NavLink></li>
+        <li><NavLink className={({ isActive }) => isActive ? "text-black font-bold" : undefined} to="/blog">Blog</NavLink></li>
+        <li><NavLink className={({ isActive }) => isActive ? "text-black font-bold" : undefined} to="/contact">Contact</NavLink></li>
+        <li><Link to="/myAppointment" className="btn btn-outline btn-error mr-3 md:hidden">My appointment</Link></li>
     </>
     return (
         <div className='shadow-lg'>
@@ -36,7 +37,7 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <Link to="/myAppointment" className="btn btn-outline btn-error mr-3">My appointment</Link>
+                    <Link to="/myAppointment" className="btn btn-outline btn-error mr-3 hidden md:flex">My appointment</Link>
                     {
                         loginUser?.uid ?
                             <div className='flex items-center'>
@@ -49,8 +50,8 @@ const Header = () => {
                                     <ul tabIndex={0} className="dropdown-content  p-2 shadow bg-base-100 rounded-box w-52 mt-4">
                                         <li className='font-semibold uppercase'>{loginUser?.displayName}</li>
                                         <li>{loginUser?.email}</li>
-                                        <li className=' py-2 hover:bg-gray-300 pl-2 rounded-md'><Link>Edit Profile</Link></li>
-                                        <li className='py-2 hover:bg-gray-300 pl-2 rounded-md'><Link to="/admin/appointment" >Manage Appointment</Link></li>
+                                        <li className=' py-2 hover:bg-gray-300 pl-2 rounded-md'><Link to="/profile">Edit Profile</Link></li>
+                                        <li className='py-2 hover:bg-gray-300 pl-2 rounded-md'><Link to="/appointment" >Manage Appointment</Link></li>
                                         <li className=' py-2 hover:bg-gray-300 pl-2 rounded-md'><Link to="/admin">Admin Pannel</Link></li>
                                         <button onClick={logout} className="mt-3 btn btn-outline w-full text-black">Logout </button>
                                     </ul>

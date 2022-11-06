@@ -62,7 +62,7 @@ const ManageAdmin = () => {
     return (
         <div>
             <h4 className='text-center font-semibold text-4xl my-3'>Manage Admin</h4>
-            <div className="w-1/2 mx-auto">
+            <div className="w-full lg:w-1/2 mx-auto">
                 <form onSubmit={submitHandle} className="card-body">
                     <div className="form-control">
                         <label className="label" htmlFor='Email'>
@@ -76,7 +76,7 @@ const ManageAdmin = () => {
                 </form>
             </div>
             <h4 className='text-center font-semibold text-2xl my-3'>Admin List</h4>
-            <div className=" w-full px-5">
+            <div className=" w-full px-5 overflow-x-auto">
                 <table className="table w-full text-center">
 
                     <thead>

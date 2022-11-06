@@ -10,7 +10,6 @@ const AllServices = () => {
     const [change, setChange] = useState(null);
     const [close, setClose] = useState(false)
     const [loading, setLoading] = useState(false)
-
     const [findAdmin, setFindAdmin] = useState("");
 
     useEffect(() => {
@@ -31,7 +30,7 @@ const AllServices = () => {
                 setProducts(data)
                 setLoading(false)
             })
-    }, [products])
+    }, [])
 
     const deleteProductHandle = (id) => {
         const confirm = window.confirm("Do you Want ot delete this product?")
@@ -73,10 +72,10 @@ const AllServices = () => {
     }
     return (
         <div>
-            <h4 className='text-center font-semibold text-2xl my-3'>All Products</h4>
+            <h4 className='text-center font-semibold text-4xl my-3'>All Services</h4>
             <p className='text-center my-3 text-red-500'>Developed not complite</p>
             {!products && <button className="btn loading">loading...</button>}
-            <div className=" w-full px-5">
+            <div className=" w-full px-5 overflow-x-auto">
                 <table className="table table-zebra w-full text-center ">
                     <thead>
                         <tr>
@@ -88,7 +87,6 @@ const AllServices = () => {
                         </tr>
                     </thead>
                     <tbody>
-
                         {
                             products.map((product, index) =>
                                 <tr key={index} >
@@ -119,7 +117,7 @@ const AllServices = () => {
                             <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                             <div>
                                 <h4 className='text-center font-semibold text-4xl my-3'>Update Product</h4>
-                                <p className='text-red-500 text-center'>All features are not allow for the Tester</p>
+                                {findAdmin === "testing@gmail.com" && <p className='text-red-500 text-center'>All features are not allow for the Tester</p>}
                                 <div className="w-full mx-auto">
                                     <form onSubmit={submitHandle} className="card-body">
                                         <div className="form-control">

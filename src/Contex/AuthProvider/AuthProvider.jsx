@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import app from '../../Firebase/Firebase.config';
-import { createUserWithEmailAndPassword, FacebookAuthProvider, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth"
+import { createUserWithEmailAndPassword, FacebookAuthProvider, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateEmail, updateProfile } from "firebase/auth"
+import { toast } from 'react-toastify';
 
 export const AuthContex = createContext();
 const auth = getAuth(app)
@@ -8,6 +9,7 @@ const auth = getAuth(app)
 const AuthProvider = ({ children }) => {
     const [loginUser, setLoginUser] = useState(null);
     const [loading, setLoading] = useState(true)
+    const [findAdmin, setFindAdmin] = useState("");
 
     const googleProvider = new GoogleAuthProvider();
     const facebookProvider = new FacebookAuthProvider();
@@ -33,6 +35,15 @@ const AuthProvider = ({ children }) => {
         return updateProfile(auth.currentUser, { displayName: name, photoURL: photo })
     }
 
+    const emailUpdate = (email) => {
+        updateEmail(auth.currentUser, email)
+            .then((result) => {
+                toast("Email update successful")
+            }).catch((error) => {
+                console.log(error.message);
+            });
+    }
+
 
     const logout = () => {
         localStorage.removeItem('car-token');
@@ -48,6 +59,15 @@ const AuthProvider = ({ children }) => {
     }, [])
 
 
+    useEffect(() => {
+        fetch(`https://auto-car-server.vercel.app/admin?email=${loginUser?.email}`)
+            .then(res => res.json())
+            .then(data => {
+                setFindAdmin(data[0]?.email)
+            })
+    }, [loginUser])
+
+
     const authInfo = {
         loginUser, setLoginUser, loading, setLoading,
         googleSiginIn,
@@ -55,8 +75,11 @@ const AuthProvider = ({ children }) => {
         loginUserManualy,
         createUser,
         profileUpdate,
-        facebookSignIn
+        facebookSignIn,
+        findAdmin,
+        emailUpdate
     }
+
     return (
         <AuthContex.Provider value={authInfo}>
             {children}

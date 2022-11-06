@@ -1,13 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FcFullTrash } from 'react-icons/fc';
 import { FaPencilAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { AuthContex } from '../../../Contex/AuthProvider/AuthProvider';
 
 const AllProduct = () => {
+    const { loginUser } = useContext(AuthContex)
     const [products, setProducts] = useState([]);
     const [change, setChange] = useState(null);
     const [close, setClose] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [findAdmin, setFindAdmin] = useState("");
+
+    useEffect(() => {
+        setLoading(true)
+        fetch(`https://auto-car-server.vercel.app/admin?email=${loginUser?.email}`)
+            .then(res => res.json())
+            .then(data => {
+                setFindAdmin(data[0].email)
+                setLoading(false)
+            })
+    }, [loginUser?.email])
 
     useEffect(() => {
         setLoading(true)
@@ -60,9 +73,9 @@ const AllProduct = () => {
 
     return (
         <div>
-            <h4 className='text-center font-semibold text-2xl my-3'>All Products</h4>
-            <div className=" w-full px-5">
-                <table className="table table-zebra w-full text-center ">
+            <h4 className='text-center font-semibold text-4xl my-3'>All Products</h4>
+            <div className=" w-full px-5 overflow-x-auto">
+                <table className="table table-zebra w-full text-center">
                     <thead>
                         <tr>
                             <th>SL No. </th>
@@ -83,9 +96,13 @@ const AllProduct = () => {
                                     </td>
                                     <td className='w-5/12 mx-auto'>{product?.name}</td>
                                     <td className='w-2/12 mx-auto'> ${product?.price}</td>
-                                    <td className='w-2/12 mx-auto'><span className='flex justify-center items-center  gap-6'>
-                                        <label htmlFor="my-modal-3" className="" onClick={() => setChange(product)}><FaPencilAlt onClick={() => setClose(true)} className=' text-xl cursor-pointer text-info' /></label>
-                                        <FcFullTrash className='text-2xl cursor-pointer' onClick={() => deleteProductHandle(product._id)} /> </span> </td>
+                                    <td className='w-2/12 mx-auto'>
+                                        {
+                                            findAdmin === "testing@gmail.com" ? <p className='text-red-500'>not allow for Tester</p> : <span className='flex justify-center items-center  gap-6'>
+                                                <label htmlFor="my-modal-3" className="" onClick={() => setChange(product)}><FaPencilAlt onClick={() => setClose(true)} className=' text-xl cursor-pointer text-info' /></label>
+                                                <FcFullTrash className='text-2xl cursor-pointer' onClick={() => deleteProductHandle(product._id)} /> </span>
+                                        }
+                                    </td>
                                 </tr>
                             )
                         }

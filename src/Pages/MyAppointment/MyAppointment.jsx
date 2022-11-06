@@ -50,7 +50,7 @@ const MyAppointment = () => {
             <div className=' bg-no-repeat h-52 md:h-72 rounded-xl my-5 flex items-center' style={{ background: `linear-gradient(to right, #121212b0 40%,rgba(118, 118, 128, 0.20)), url(${heaerBg})`, backgroundPosition: "left" }}>
                 <h1 className='text-white text-3xl lg:text-5xl font-bold ml-5 lg:ml-24'> My Appontment</h1>
             </div>
-            <div className=" w-full mt-10">
+            <div className=" w-full mt-10 overflow-x-auto">
                 <table className="table w-full text-center">
 
                     <thead>
@@ -71,7 +71,7 @@ const MyAppointment = () => {
                     </tbody>
                 </table>
                 {
-                    loading && <button className="btn loading w-32">loading...</button>
+                    loading && <div className='flex justify-center mt-32'><button className="btn loading">loading...</button></div>
                 }
                 {
                     appointment.length === 0 && <p className='text-red-500 text-xl text-center'>You have no appointment</p>

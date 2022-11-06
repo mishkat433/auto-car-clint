@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { FaFacebookF, FaGoogle, FaLinkedinIn } from 'react-icons/fa';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import loginImg from "../../assets/images/login/login.svg"
 import { AuthContex } from '../../Contex/AuthProvider/AuthProvider';
+import SocilaLogin from '../common/SocialLogin/SocilaLogin';
 
 const Register = () => {
-    const { googleSiginIn, facebookSignIn, createUser, profileUpdate } = useContext(AuthContex)
+    const { createUser, profileUpdate } = useContext(AuthContex)
     const [formData, setFormData] = useState({});
     const [showPass, setshowPass] = useState(false);
     const [error, setError] = useState("")
@@ -14,21 +14,6 @@ const Register = () => {
     const navigate = useNavigate()
 
     const from = location.state?.from?.pathname || "/";
-
-    const googleSiginHandle = () => {
-        googleSiginIn()
-            .then(result => { navigate(from, { replace: true }) })
-            .catch(err => setError(err.message))
-    }
-
-    const facebookSigninHandle = () => {
-        facebookSignIn()
-            .then(result => {
-                navigate(from, { replace: true })
-                setError("")
-            })
-            .catch(err => setError(err.message))
-    }
 
     const submitHandle = (e) => {
         if (formData?.email) {
@@ -72,13 +57,13 @@ const Register = () => {
     }
 
     return (
-        <div className="w-11/12 mx-auto my-10 ">
+        <div className="w-11/12 mx-auto h-full lg:h-[85vh] my-5 md:my-10 ">
             <div className="flex justify-around items-center gap-10" data-aos="fade-right">
-                <div className="text-center lg:text-left ">
+                <div className="text-center lg:text-left hidden lg:block ">
                     <img src={loginImg} alt="" />
                 </div>
-                <div className="card shadow-2xl  w-2/5" data-aos="fade-left">
-                    <form className="card-body " onSubmit={submitHandle}>
+                <div className="card shadow-2xl w-full lg:w-2/5" data-aos="fade-left">
+                    <form className="card-body py-0" onSubmit={submitHandle}>
                         {error && <p className='text-center text-red-600 '>{error}</p>}
                         <div className="form-control">
                             <h1 className='text-center text-3xl font-bold'>Register</h1>
@@ -115,16 +100,10 @@ const Register = () => {
                         </div>
                         <h5 className='text-center'>or Sign in with</h5>
                     </form>
-                    <div className='flex justify-evenly mb-3'>
-                        <button onClick={googleSiginHandle} className='bg-gray-300 p-3 rounded-full text-orange-600 text-xl'><FaGoogle /></button>
-                        <button onClick={facebookSigninHandle} className='bg-gray-300 p-3 rounded-full text-blue-600 text-xl'><FaFacebookF /></button>
-                        <button className='bg-gray-300 p-3 rounded-full text-blue-800 text-xl'><FaLinkedinIn /></button>
-
-                    </div>
+                    <SocilaLogin />
                     <p to="/" className='text-center text-lg mb-10'>Already have an account?
                         <Link to="/login" className='font-bold text-orange-600'>Login</Link></p>
                 </div>
-
             </div>
         </div>
     );

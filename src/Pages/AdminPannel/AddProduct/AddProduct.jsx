@@ -34,7 +34,7 @@ const AddProduct = () => {
     return (
         <div>
             <h4 className='text-center font-semibold text-4xl my-3'>Add Product</h4>
-            <div className="w-1/2 mx-auto">
+            <div className=" w-full lg:w-1/2 mx-auto">
                 <form onSubmit={submitHandle} className="card-body">
                     <div className="form-control">
                         <label className="label" htmlFor='name'>

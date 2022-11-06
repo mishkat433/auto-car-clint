@@ -5,7 +5,6 @@ import notFoundImg from "../../assets/amination/error.gif";
 
 const NotFound = () => {
     const error = useRouteError()
-    console.log(error);
     return (
         <div>
             <Header />
