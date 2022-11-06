@@ -34,11 +34,11 @@ const Profile = () => {
             <div className='flex justify-center mb-5'>
                 <div className="avatar online ">
                     <div className="w-40 rounded-full">
-                        <img className='w-32' src={loginUser.photoURL} alt="profile" />
+                        <img className='w-24 md:w-32' src={loginUser.photoURL} alt="profile" />
                     </div>
                 </div>
             </div>
-            <form onSubmit={updateProfileHandle} className='w-1/2 mx-auto'>
+            <form onSubmit={updateProfileHandle} className='w-full lg:w-1/2 mx-auto'>
                 <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                     <div className="col-span-full ">
                         <label htmlFor="username" className="text-sm">Username</label>

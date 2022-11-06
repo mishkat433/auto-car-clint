@@ -52,7 +52,6 @@ const MyAppointment = () => {
             </div>
             <div className=" w-full mt-10 overflow-x-auto">
                 <table className="table w-full text-center">
-
                     <thead>
                         <tr>
                             <th className='w-1/12'>SL No </th>
@@ -67,7 +66,6 @@ const MyAppointment = () => {
                         {
                             appointment?.map((order, index) => <AppointmentTable order={order} index={index} deleteAppointment={deleteAppointment} key={order._id} />)
                         }
-
                     </tbody>
                 </table>
                 {
