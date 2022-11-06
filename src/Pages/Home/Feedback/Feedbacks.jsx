@@ -13,6 +13,7 @@ const Feedbacks = () => {
                 {/* {
                     featuresData.map(feature => <Feature feature={feature} key={feature.id} />)
                 } */}
+                <p>coming soooooooooooon</p>
             </div>
         </div>
     );
