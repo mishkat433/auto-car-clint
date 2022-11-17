@@ -3,7 +3,7 @@ import About from '../About/About';
 import Banner from '../Banner/Banner';
 import Contact from '../Contact/Contact';
 import Features from '../Features/Features';
-import Feedbacks from '../Feedback/Feedbacks';
+// import Feedbacks from '../Feedback/Feedbacks';
 import Products from '../Products/Products';
 import Services from '../Services/Services';
 import Teems from '../Teem/Teems';
@@ -18,7 +18,7 @@ const Home = () => {
             <Products />
             <Teems />
             <Features />
-            <Feedbacks />
+            {/* <Feedbacks /> */}
         </div>
     );
 };
